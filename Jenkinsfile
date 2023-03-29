@@ -1,8 +1,8 @@
 pipeline { 
     agent any 
     environment { 
-        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id') 
-        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID') 
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY_ID')
         SBT_OPTS = "${SBT_OPTS} -Dsbt.color=false"
     }
     stages { 
@@ -27,8 +27,8 @@ pipeline {
         stage('SonarQube Analysis') {
            steps {
                script {
-                   def scannerHome = tool 'sonarqube-1';
-                   withSonarQubeEnv('sonarqube-1') {
+                   def scannerHome = tool 'SonarQubeScanner';
+                   withSonarQubeEnv('SonarQubeScanner') {
                        sh "${scannerHome}/bin/sonar-scanner"
                    }
                }
